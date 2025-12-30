@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To Do List</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <h1 class="fw-bold py-3 px-5 mt-5">Sticky Wall</h1>
+
+    <div
+      class="container my-5 border border-1 border-secondary-subtle rounded-2 p-4"
+    >
+      <div class="row g-2 align-items-stretch">
+        <div class="col-lg-4 col-sm-6 d-flex"></div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Add Note</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="noteTitle" class="form-label">Note Title</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="noteTitle"
+                  placeholder="Enter note title"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="noteBody" class="form-label">Note Body</label>
+                <textarea
+                  class="form-control"
+                  id="noteBody"
+                  rows="3"
+                  placeholder="Enter note body"
+                ></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" id="addBtn" class="btn bg-danger-subtle">
+              Add
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="./js/main.js"></script>
+  </body>
+</html>

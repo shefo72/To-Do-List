@@ -1,0 +1,7 @@
+.task {
+  height: 350px;
+  overflow: hidden;
+}
+.bg-red {
+  background-color: #ffdada;
+}

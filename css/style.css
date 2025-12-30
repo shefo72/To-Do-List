@@ -1,7 +1,21 @@
 .task {
   height: 350px;
   overflow: hidden;
+  position: relative;
 }
 .bg-red {
   background-color: #ffdada;
+}
+
+.noteDeleteBtn {
+  position: absolute;
+  top: 0;
+  right: 15px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+.task:hover .noteDeleteBtn {
+  opacity: 1;
+  visibility: visible;
 }

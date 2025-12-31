@@ -3,7 +3,7 @@ const addBtn = document.getElementById("addBtn");
 const noteTitle = document.getElementById("noteTitle");
 const noteBody = document.getElementById("noteBody");
 
-const tasks = [];
+const tasks = JSON.parse(window.localStorage.getItem("tasks")) || [];
 
 const notyf = new Notyf();
 addBtn.addEventListener("click", () => {
@@ -19,6 +19,7 @@ addBtn.addEventListener("click", () => {
   };
 
   tasks.push(task);
+  window.localStorage.setItem("tasks", JSON.stringify(tasks));
 
   noteTitle.value = "";
   noteBody.value = "";
@@ -33,14 +34,19 @@ addBtn.addEventListener("click", () => {
 
 function viewTasks(tasks) {
   let TasksHTML = "";
+  const bgColors = ["#fcf3b3", "#d1ebec", "#fed4a8", "#ffdada"];
 
-  tasks.forEach((task) => {
+  tasks.forEach((task, index) => {
     TasksHTML += `
           <div class="col-lg-4 col-sm-6 d-flex">
-            <div class="task bg-red p-3 rounded-2 w-100">
+            <div class="task p-3 rounded-2 w-100" style="background-color: ${
+              bgColors[index % bgColors.length]
+            }">
               <h3>${task.title}</h3>
               <p>${task.body}</p>
-              <button class="noteDeleteBtn btn btn-sm mt-2" onclick="deleteTask(${task.id})">
+              <button class="noteDeleteBtn btn btn-sm mt-2" onclick="deleteTask(${
+                task.id
+              })">
                 <i class="fa-solid fa-x"></i>
               </button>
             </div>
@@ -70,9 +76,10 @@ function deleteTask(id) {
   const index = tasks.findIndex((task) => task.id === id);
   if (index !== -1) {
     tasks.splice(index, 1);
+    window.localStorage.setItem("tasks", JSON.stringify(tasks));
     viewTasks(tasks);
+    notyf.success("Your note have been successfully deleted!");
   }
-  notyf.success("Your note have been successfully deleted!");
 }
 
 viewTasks(tasks);

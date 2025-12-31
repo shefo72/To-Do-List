@@ -3,9 +3,6 @@
   overflow: hidden;
   position: relative;
 }
-.bg-red {
-  background-color: #ffdada;
-}
 
 .noteDeleteBtn {
   position: absolute;
@@ -18,4 +15,9 @@
 .task:hover .noteDeleteBtn {
   opacity: 1;
   visibility: visible;
+}
+
+.container img {
+  width: 60px;
+  height: 60px;
 }

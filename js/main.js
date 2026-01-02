@@ -3,8 +3,25 @@ const addBtn = document.getElementById("addBtn");
 const noteTitle = document.getElementById("noteTitle");
 const noteBody = document.getElementById("noteBody");
 const taskCount = document.getElementById("taskCount");
+const darkBtn = document.getElementById("darkBtn");
 
 const tasks = JSON.parse(window.localStorage.getItem("tasks")) || [];
+const notyf = new Notyf();
+const savedTheme = localStorage.getItem("theme");
+
+initApp();
+
+function initApp() {
+  if (savedTheme === "dark") {
+    document.body.classList.add("dark-mode");
+    darkBtn.innerHTML = `<i class="fa-solid fa-sun text-dark"></i>`;
+    darkBtn.classList.remove("bg-black");
+    darkBtn.classList.add("bg-white");
+  }
+
+  viewTasks(tasks);
+  calcProgress();
+}
 
 function calcProgress() {
   const progress = document.querySelector(".progress-bar");
@@ -22,8 +39,6 @@ function changeStatus(id) {
   calcProgress();
   viewTasks(tasks);
 }
-
-const notyf = new Notyf();
 
 addBtn.addEventListener("click", () => {
   if (!noteTitle.value || !noteBody.value) {
@@ -55,7 +70,14 @@ addBtn.addEventListener("click", () => {
 
 function viewTasks(tasks) {
   let TasksHTML = "";
-  const bgColors = ["#fcf3b3", "#d1ebec", "#fed4a8", "#ffdada"];
+  const bgColors = [
+    "#fcf3b3",
+    "#d1ebec",
+    "#fed4a8",
+    "#ffdada",
+    "#E07C7B",
+    "#F2A365",
+  ];
 
   tasks.forEach((task, index) => {
     TasksHTML += `
@@ -116,5 +138,18 @@ function deleteTask(id) {
   }
 }
 
-viewTasks(tasks);
-calcProgress();
+darkBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
+
+  if (document.body.classList.contains("dark-mode")) {
+    darkBtn.innerHTML = `<i class="fa-solid fa-sun text-dark"></i>`;
+    darkBtn.classList.remove("bg-black");
+    darkBtn.classList.add("bg-white");
+    window.localStorage.setItem("theme", "dark");
+  } else {
+    darkBtn.innerHTML = `<i class="fa-solid fa-moon"></i>`;
+    darkBtn.classList.remove("bg-white");
+    darkBtn.classList.add("bg-black");
+    window.localStorage.setItem("theme", "light");
+  }
+});

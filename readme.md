@@ -11,18 +11,15 @@ Each note is displayed as a colorful card on the wall, making task management an
 ## 🚀 Features
 
 - **Add a new note** with a title and body.
-- **Edit existing notes** to update content anytime.
 - **Delete notes** easily.
 - **Mark tasks as completed** with a checkbox.
 - **Progress bar** showing completed vs total notes dynamically.
 - **Responsive design** using Bootstrap grid system.
 - **Modal form** for adding and editing notes.
 - **Dynamic UI updates** without page refresh.
-- **Search notes** by title or content.
 - **Color-coded notes** for better visual organization.
-- **Optional due dates or tags** for categorization (extendable).
 - **Persistent storage** using LocalStorage so notes remain on page reload.
-- **Confirmation on delete** to prevent accidental deletion.
+- **Dark mode** for better accessibility.
 
 ---
 
@@ -43,11 +40,9 @@ Each note is displayed as a colorful card on the wall, making task management an
 3. Enter a **title** and **body** for your note.
 4. Click **Add** to save the note.
 5. Your note will appear on the sticky wall.
-6. **Edit a note** by clicking the edit icon (✏️) on a note.
-7. **Mark a note as completed** by checking the checkbox.
-8. **Delete a note** by clicking the delete icon (🗑️) – a confirmation prompt will appear.
-9. Use the **search bar** to find notes by title or content.
-10. Track your progress using the **dynamic progress bar**.
+6. **Mark a note as completed** by checking the checkbox.
+7. **Delete a note** by clicking the delete icon (❌)
+8. Track your progress using the **dynamic progress bar**.
 
 ---
 
@@ -58,4 +53,3 @@ Each note is displayed as a colorful card on the wall, making task management an
 - **Export/Import notes** as JSON or CSV.
 - **Multi-user support** with authentication.
 - **Drag & drop notes** to rearrange them on the wall.
-- **Dark mode** for better accessibility.

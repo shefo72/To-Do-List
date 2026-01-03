@@ -3,7 +3,7 @@
 ## ✨ Overview
 
 **Sticky Wall** is a simple, interactive, and visually engaging **To-Do Notes** web application.  
-Users can **add, view, edit, search, and delete notes** in a dynamic way using **Bootstrap** and **JavaScript**.  
+Users can **add, view, edit, and delete notes** in a dynamic way using **Bootstrap** and **JavaScript**.  
 Each note is displayed as a colorful card on the wall, making task management and idea organization simple and fun.
 
 ---
@@ -11,6 +11,7 @@ Each note is displayed as a colorful card on the wall, making task management an
 ## 🚀 Features
 
 - **Add a new note** with a title and body.
+- **Edit notes** using the same modal form, with existing title and body pre-filled.
 - **Delete notes** easily.
 - **Mark tasks as completed** with a checkbox.
 - **Progress bar** showing completed vs total notes dynamically.
@@ -42,7 +43,8 @@ Each note is displayed as a colorful card on the wall, making task management an
 5. Your note will appear on the sticky wall.
 6. **Mark a note as completed** by checking the checkbox.
 7. **Delete a note** by clicking the delete icon (❌)
-8. Track your progress using the **dynamic progress bar**.
+8. **Edit a note** by clicking the edit icon (📝)
+9. Track your progress using the **dynamic progress bar**.
 
 ---
 

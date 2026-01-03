@@ -63,7 +63,7 @@ addBtn.addEventListener("click", () => {
   calcProgress();
   notyf.success("Your note have been successfully added!");
 
-  const modalEl = document.getElementById("exampleModal");
+  const modalEl = document.getElementById("addTaskModal");
   const modal = bootstrap.Modal.getInstance(modalEl);
   modal.hide();
 });
@@ -95,7 +95,12 @@ function viewTasks(tasks) {
                   <input type="checkbox" onchange="changeStatus(${task.id})" ${
       task.status ? "checked" : ""
     } class="form-check-input mt-0 task-status" />
-
+                  <button
+                    class="btn btn-sm"
+                    onclick="editTask(${task.id})"
+                  >
+                    <i class="fa-solid fa-pen-to-square"></i>
+                  </button>
                   <button
                     class="btn btn-sm"
                     onclick="deleteTask(${task.id})"
@@ -115,7 +120,7 @@ function viewTasks(tasks) {
             class="w-100 h-100 btn"
             type="button"
             data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
+            data-bs-target="#addTaskModal"
           >
             <i class="fa-solid fs-1 fa-plus"></i>
           </button>
@@ -152,4 +157,36 @@ darkBtn.addEventListener("click", () => {
     darkBtn.classList.add("bg-black");
     window.localStorage.setItem("theme", "light");
   }
+});
+
+let currentEditId = null;
+
+function editTask(id) {
+  const task = tasks.find((t) => t.id === id);
+  if (!task) return;
+  document.getElementById("editTitle").value = task.title;
+  document.getElementById("editBody").value = task.body;
+  currentEditId = id;
+
+  const editModalEl = document.getElementById("editModal");
+  const editModal = new bootstrap.Modal(editModalEl);
+
+  editModal.show();
+}
+
+document.getElementById("editBtn").addEventListener("click", () => {
+  const title = document.getElementById("editTitle").value;
+  const body = document.getElementById("editBody").value;
+
+  const task = tasks.find((t) => t.id === currentEditId);
+  if (!task) return;
+
+  task.title = title;
+  task.body = body;
+
+  document.activeElement.blur();
+  const modalEl = document.getElementById("editModal");
+  bootstrap.Modal.getInstance(modalEl).hide();
+
+  viewTasks(tasks);
 });

@@ -50,13 +50,12 @@
       </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Add Modal -->
     <div
       class="modal fade"
-      id="exampleModal"
+      id="addTaskModal"
       tabindex="-1"
       aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
     >
       <div class="modal-dialog">
         <div class="modal-content">
@@ -101,6 +100,62 @@
             </button>
             <button type="button" id="addBtn" class="btn bg-danger-subtle">
               Add
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div
+      class="modal fade"
+      id="editModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Note</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="noteTitle" class="form-label">Note Title</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="editTitle"
+                  placeholder="Enter note title"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="noteBody" class="form-label">Note Body</label>
+                <textarea
+                  class="form-control"
+                  id="editBody"
+                  rows="3"
+                  placeholder="Enter note body"
+                ></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" id="editBtn" class="btn bg-danger-subtle">
+              save
             </button>
           </div>
         </div>

@@ -4,10 +4,12 @@ const noteTitle = document.getElementById("noteTitle");
 const noteBody = document.getElementById("noteBody");
 const taskCount = document.getElementById("taskCount");
 const darkBtn = document.getElementById("darkBtn");
+const label = document.getElementById("label");
 
 const tasks = JSON.parse(window.localStorage.getItem("tasks")) || [];
 const notyf = new Notyf();
 const savedTheme = localStorage.getItem("theme");
+const labelsName = ["Study", "Fun", "Work", "Projects"];
 
 initApp();
 
@@ -21,6 +23,7 @@ function initApp() {
 
   viewTasks(tasks);
   calcProgress();
+  handleOptions();
 }
 
 function calcProgress() {
@@ -41,8 +44,18 @@ function changeStatus(id) {
 }
 
 addBtn.addEventListener("click", () => {
-  if (!noteTitle.value || !noteBody.value) {
-    notyf.error("You must fill out all data moving forward");
+  if (!noteTitle.value) {
+    notyf.error("Title is required.");
+    return;
+  }
+
+  if (!noteBody.value) {
+    notyf.error("Note content is required.");
+    return;
+  }
+
+  if (label.value === "Choose label") {
+    notyf.error("Please select a label.");
     return;
   }
 
@@ -51,6 +64,7 @@ addBtn.addEventListener("click", () => {
     title: noteTitle.value,
     body: noteBody.value,
     status: false,
+    label: label.value,
   };
 
   tasks.push(task);
@@ -91,6 +105,7 @@ function viewTasks(tasks) {
 
                 <h3>${task.title}</h3>
                 <p>${task.body}</p>
+                <span class="badge position-absolute">${task.label.toUpperCase()}</span>
                 <div class="options d-flex align-items-center justify-content-center gap-1 mt-2">
                   <input type="checkbox" onchange="changeStatus(${task.id})" ${
       task.status ? "checked" : ""
@@ -190,3 +205,10 @@ document.getElementById("editBtn").addEventListener("click", () => {
 
   viewTasks(tasks);
 });
+
+function handleOptions() {
+  label.innerHTML += `<option selected disabled>Choose label</option>`;
+  labelsName.forEach((l) => {
+    label.innerHTML += `<option value="${l}">${l}</option>`;
+  });
+}

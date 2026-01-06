@@ -5,11 +5,14 @@ const noteBody = document.getElementById("noteBody");
 const taskCount = document.getElementById("taskCount");
 const darkBtn = document.getElementById("darkBtn");
 const label = document.getElementById("label");
+const sortList = document.getElementById("sortList");
 
 const tasks = JSON.parse(window.localStorage.getItem("tasks")) || [];
 const notyf = new Notyf();
 const savedTheme = localStorage.getItem("theme");
 const labelsName = ["Study", "Fun", "Work", "Projects"];
+
+let currentFilter = "All";
 
 initApp();
 
@@ -23,7 +26,8 @@ function initApp() {
 
   viewTasks(tasks);
   calcProgress();
-  handleOptions();
+  handleLabel(label);
+  handleLabel(sortList);
 }
 
 function calcProgress() {
@@ -40,7 +44,7 @@ function changeStatus(id) {
   localStorage.setItem("tasks", JSON.stringify(tasks));
 
   calcProgress();
-  viewTasks(tasks);
+  applyFilter();
 }
 
 addBtn.addEventListener("click", () => {
@@ -73,7 +77,7 @@ addBtn.addEventListener("click", () => {
   noteTitle.value = "";
   noteBody.value = "";
 
-  viewTasks(tasks);
+  applyFilter();
   calcProgress();
   notyf.success("Your note have been successfully added!");
 
@@ -151,7 +155,7 @@ function deleteTask(id) {
   if (index !== -1) {
     tasks.splice(index, 1);
     window.localStorage.setItem("tasks", JSON.stringify(tasks));
-    viewTasks(tasks);
+    applyFilter();
     calcProgress();
 
     notyf.success("Your note have been successfully deleted!");
@@ -178,9 +182,14 @@ let currentEditId = null;
 
 function editTask(id) {
   const task = tasks.find((t) => t.id === id);
+  const labelEdit = document.getElementById("editLabel");
+
   if (!task) return;
   document.getElementById("editTitle").value = task.title;
   document.getElementById("editBody").value = task.body;
+
+  handleLabel(labelEdit);
+  labelEdit.value = task.label;
   currentEditId = id;
 
   const editModalEl = document.getElementById("editModal");
@@ -192,23 +201,40 @@ function editTask(id) {
 document.getElementById("editBtn").addEventListener("click", () => {
   const title = document.getElementById("editTitle").value;
   const body = document.getElementById("editBody").value;
+  const label = document.getElementById("editLabel").value;
 
   const task = tasks.find((t) => t.id === currentEditId);
   if (!task) return;
 
   task.title = title;
   task.body = body;
+  task.label = label;
 
   document.activeElement.blur();
   const modalEl = document.getElementById("editModal");
   bootstrap.Modal.getInstance(modalEl).hide();
 
-  viewTasks(tasks);
+  applyFilter();
 });
 
-function handleOptions() {
-  label.innerHTML += `<option selected disabled>Choose label</option>`;
+function handleLabel(ele) {
+  if (ele.options.length > 1) return;
+
   labelsName.forEach((l) => {
-    label.innerHTML += `<option value="${l}">${l}</option>`;
+    ele.innerHTML += `<option value="${l}">${l}</option>`;
   });
+}
+
+sortList.addEventListener("change", () => {
+  currentFilter = sortList.value;
+  applyFilter();
+});
+
+function applyFilter() {
+  const filteredTasks =
+    currentFilter === "All"
+      ? tasks
+      : tasks.filter((t) => t.label === currentFilter);
+
+  viewTasks(filteredTasks);
 }

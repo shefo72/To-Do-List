@@ -23,7 +23,7 @@
       <img class="me-2" src="./assets//to-do-list.png" alt="to do list" />
       <h1 class="fw-bold">Sticky Wall</h1>
     </div>
-    <div class="container mt-5">
+    <div class="container mt-5 d-flex justify-content-between">
       <div class="w-25">
         <div class="d-flex justify-content-between mb-1">
           <small>Progress</small>
@@ -39,6 +39,11 @@
             aria-valuemax="1"
           ></div>
         </div>
+      </div>
+      <div>
+        <select class="form-select" name="" id="sortList">
+          <option selected value="All">All</option>
+        </select>
       </div>
     </div>
 
@@ -90,7 +95,9 @@
               </div>
               <div class="mb-3">
                 <label for="label" class="form-label fw-semibold">Label</label>
-                <select id="label" class="form-select"></select>
+                <select id="label" class="form-select">
+                  <option selected disabled>Choose label</option>
+                </select>
               </div>
             </form>
           </div>
@@ -147,6 +154,12 @@
                   rows="3"
                   placeholder="Enter note body"
                 ></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="label" class="form-label fw-semibold">Label</label>
+                <select id="editLabel" class="form-select">
+                  <option selected disabled>Choose label</option>
+                </select>
               </div>
             </form>
           </div>

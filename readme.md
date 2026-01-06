@@ -10,17 +10,14 @@ Each note is displayed as a colorful card on the wall, making task management an
 
 ## 🚀 Features
 
-- **Add a new note** with a title and body.
-- **Edit notes** using the same modal form, with existing title and body pre-filled.
-- **Delete notes** easily.
+- **Add, edit, and delete notes** with a title, body, and tag.
 - **Mark tasks as completed** with a checkbox.
-- **Progress bar** showing completed vs total notes dynamically.
-- **Responsive design** using Bootstrap grid system.
-- **Modal form** for adding and editing notes.
-- **Dynamic UI updates** without page refresh.
-- **Color-coded notes** for better visual organization.
+- **Track progress** dynamically with a progress bar showing completed vs total notes.
+- **Responsive, color-coded design with dark mode** using Bootstrap for better visual organization and accessibility.
+- **Add and edit notes via modal forms** for a smooth workflow.
+- **Real-time UI updates** without needing to refresh the page.
 - **Persistent storage** using LocalStorage so notes remain on page reload.
-- **Dark mode** for better accessibility.
+- **Organize notes** efficiently with tags or categories.
 
 ---
 
@@ -38,7 +35,7 @@ Each note is displayed as a colorful card on the wall, making task management an
 
 1. Open the project in a web browser.
 2. Click the **Add Note (+)** button to open the modal.
-3. Enter a **title** and **body** for your note.
+3. Enter a **title**,**body** and **label** for your note.
 4. Click **Add** to save the note.
 5. Your note will appear on the sticky wall.
 6. **Mark a note as completed** by checking the checkbox.
@@ -51,7 +48,7 @@ Each note is displayed as a colorful card on the wall, making task management an
 ## 💡 Future Enhancements
 
 - **Due dates and reminders** for tasks.
-- **Tags or categories** for better organization.
 - **Export/Import notes** as JSON or CSV.
 - **Multi-user support** with authentication.
 - **Drag & drop notes** to rearrange them on the wall.
+- **Search and filter notes** by title, label, or status.

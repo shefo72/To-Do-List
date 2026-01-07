@@ -7,12 +7,13 @@ const darkBtn = document.getElementById("darkBtn");
 const label = document.getElementById("label");
 const sortList = document.getElementById("sortList");
 
-const tasks = JSON.parse(window.localStorage.getItem("tasks")) || [];
-const notyf = new Notyf();
-const savedTheme = localStorage.getItem("theme");
-const labelsName = ["Study", "Fun", "Work", "Projects"];
-
+let tasks = JSON.parse(window.localStorage.getItem("tasks")) || [];
+let currentEditId = null;
 let currentFilter = "All";
+
+const savedTheme = localStorage.getItem("theme");
+const labelsName = ["Fun", "Health", "Personal", "Projects", "Study", "Work"];
+const notyf = new Notyf();
 
 initApp();
 
@@ -24,7 +25,7 @@ function initApp() {
     darkBtn.classList.add("bg-white");
   }
 
-  viewTasks(tasks);
+  renderTasks();
   calcProgress();
   handleLabel(label);
   handleLabel(sortList);
@@ -38,13 +39,15 @@ function calcProgress() {
 }
 
 function changeStatus(id) {
+  const taskDiv = document.getElementById(id);
   const task = tasks.find((t) => t.id === id);
+
   if (!task) return;
   task.status = !task.status;
-  localStorage.setItem("tasks", JSON.stringify(tasks));
+  saveTasks();
 
   calcProgress();
-  applyFilter();
+  renderTasks();
 }
 
 addBtn.addEventListener("click", () => {
@@ -72,12 +75,12 @@ addBtn.addEventListener("click", () => {
   };
 
   tasks.push(task);
-  window.localStorage.setItem("tasks", JSON.stringify(tasks));
+  saveTasks();
 
   noteTitle.value = "";
   noteBody.value = "";
 
-  applyFilter();
+  renderTasks();
   calcProgress();
   notyf.success("Your note have been successfully added!");
 
@@ -99,7 +102,9 @@ function viewTasks(tasks) {
 
   tasks.forEach((task, index) => {
     TasksHTML += `
-            <div class="col-lg-4 col-sm-6 d-flex">
+            <div id="${task.id}" class="col-lg-4 col-sm-6 d-flex ${
+      task.status ? "fixed" : ""
+    }">
               <div class="task p-3 rounded-2 w-100 position-relative ${
                 task.status ? "opacity-50 text-decoration-line-through" : ""
               }"
@@ -133,7 +138,7 @@ function viewTasks(tasks) {
   });
 
   TasksHTML += `
-      <div class="col-lg-4 col-sm-6 d-flex">
+      <div class="col-lg-4 col-sm-6 d-flex fixed">
         <div class="task bg-secondary-subtle p-3 rounded-2 w-100 d-flex align-items-center justify-content-center">
           <button
             class="w-100 h-100 btn"
@@ -154,8 +159,8 @@ function deleteTask(id) {
   const index = tasks.findIndex((task) => task.id === id);
   if (index !== -1) {
     tasks.splice(index, 1);
-    window.localStorage.setItem("tasks", JSON.stringify(tasks));
-    applyFilter();
+    saveTasks();
+    renderTasks();
     calcProgress();
 
     notyf.success("Your note have been successfully deleted!");
@@ -177,8 +182,6 @@ darkBtn.addEventListener("click", () => {
     window.localStorage.setItem("theme", "light");
   }
 });
-
-let currentEditId = null;
 
 function editTask(id) {
   const task = tasks.find((t) => t.id === id);
@@ -214,7 +217,7 @@ document.getElementById("editBtn").addEventListener("click", () => {
   const modalEl = document.getElementById("editModal");
   bootstrap.Modal.getInstance(modalEl).hide();
 
-  applyFilter();
+  renderTasks();
 });
 
 function handleLabel(ele) {
@@ -227,14 +230,40 @@ function handleLabel(ele) {
 
 sortList.addEventListener("change", () => {
   currentFilter = sortList.value;
-  applyFilter();
+  renderTasks();
 });
 
-function applyFilter() {
+function renderTasks() {
   const filteredTasks =
     currentFilter === "All"
       ? tasks
       : tasks.filter((t) => t.label === currentFilter);
 
+  filteredTasks.sort((a, b) => {
+    return a.status - b.status;
+  });
+
   viewTasks(filteredTasks);
+}
+
+new Sortable(container, {
+  swapThreshold: 1,
+  animation: 250,
+  draggable: ".col-lg-4:not(.fixed)",
+
+  onEnd() {
+    const items = container.querySelectorAll(".col-lg-4[id]");
+
+    const newOrderIds = Array.from(items).map((item) => Number(item.id));
+
+    tasks.sort((a, b) => {
+      return newOrderIds.indexOf(a.id) - newOrderIds.indexOf(b.id);
+    });
+
+    saveTasks();
+  },
+});
+
+function saveTasks() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
 }

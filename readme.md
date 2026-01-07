@@ -18,6 +18,7 @@ Each note is displayed as a colorful card on the wall, making task management an
 - **Real-time UI updates** without needing to refresh the page.
 - **Persistent storage** using LocalStorage so notes remain on page reload.
 - **Organize notes** efficiently with tags or categories.
+- **Drag & drop notes** to rearrange them on the wall.
 
 ---
 
@@ -28,6 +29,7 @@ Each note is displayed as a colorful card on the wall, making task management an
 - **JavaScript** – for dynamic functionality
 - **FontAwesome** – for icons
 - **Notyf.js** – for notifications
+- **SortableJS** – for drag-and-drop functionality
 
 ---
 
@@ -35,13 +37,11 @@ Each note is displayed as a colorful card on the wall, making task management an
 
 1. Open the project in a web browser.
 2. Click the **Add Note (+)** button to open the modal.
-3. Enter a **title**,**body** and **label** for your note.
-4. Click **Add** to save the note.
-5. Your note will appear on the sticky wall.
-6. **Mark a note as completed** by checking the checkbox.
-7. **Delete a note** by clicking the delete icon (❌)
-8. **Edit a note** by clicking the edit icon (📝)
-9. Track your progress using the **dynamic progress bar**.
+3. Enter a **title**,**body** and **label** for your note and click **Add**.
+4. **Mark a note as completed** by checking the checkbox.
+5. **Delete a note** by clicking the delete icon (❌)
+6. **Edit a note** by clicking the edit icon (📝)
+7. Track your progress using the **dynamic progress bar**.
 
 ---
 
@@ -50,5 +50,4 @@ Each note is displayed as a colorful card on the wall, making task management an
 - **Due dates and reminders** for tasks.
 - **Export/Import notes** as JSON or CSV.
 - **Multi-user support** with authentication.
-- **Drag & drop notes** to rearrange them on the wall.
 - **Search and filter notes** by title, label, or status.

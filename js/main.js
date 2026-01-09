@@ -76,7 +76,7 @@ function deleteTask(id) {
   }
 }
 
-function editTask(id) {
+function openTask(id) {
   const task = tasks.find((t) => t.id === id);
   const labelEdit = document.getElementById("editLabel");
 
@@ -164,16 +164,7 @@ function viewTasks(tasks) {
                   <input type="checkbox" name="status" data-id="${task.id}" ${
       task.status ? "checked" : ""
     } class="form-check-input mt-0 task-status" />
-                  <button
-                    class="btn btn-sm"
-                    onclick="editTask(${task.id})"
-                  >
-                    <i class="fa-solid fa-pen-to-square"></i>
-                  </button>
-                  <button
-                    class="btn btn-sm"
-                    onclick="deleteTask(${task.id})"
-                  >
+                  <button class="btn btn-sm deleteBtn" >
                     <i class="fa-solid fa-x"></i>
                   </button>
                 </div>
@@ -219,6 +210,24 @@ function updateUI() {
 }
 
 /* ========== Events ========== */
+container.addEventListener("click", (e) => {
+  const task = e.target.closest(".task");
+  if (!task) return;
+  const card = task.closest(".col-lg-4");
+  if (!card) return;
+  const id = Number(card.id);
+
+  if (e.target.closest(".deleteBtn")) {
+    e.stopPropagation();
+    deleteTask(id);
+    return;
+  }
+  if (e.target.closest(".form-check-input")) {
+    return;
+  }
+  openTask(id);
+});
+
 addBtn.addEventListener("click", () => {
   createTask();
 });

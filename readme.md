@@ -19,7 +19,7 @@ Each note is displayed as a colorful card on the wall, making task management an
 - **Persistent storage** using LocalStorage so notes remain on page reload.
 - **Organize notes** efficiently with tags or categories.
 - **Drag & drop notes** to rearrange them on the wall.
-- **Search and filter notes** by title, label, or status.
+- **Search functionality** to quickly find specific notes.
 
 ---
 

@@ -82,7 +82,7 @@
             ></button>
           </div>
           <div class="modal-body">
-            <form>
+            <form id="addForm">
               <div class="mb-3">
                 <label for="noteTitle" class="form-label">Note Title</label>
                 <input
@@ -107,6 +107,7 @@
                   <option selected disabled>Choose label</option>
                 </select>
               </div>
+              <div id="inputLabel" class="mb-3"></div>
             </form>
           </div>
           <div class="modal-footer">
@@ -114,6 +115,7 @@
               type="button"
               class="btn btn-secondary"
               data-bs-dismiss="modal"
+              id="closeFormBtn"
             >
               Close
             </button>

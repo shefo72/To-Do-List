@@ -13,15 +13,12 @@ Each note is displayed as a colorful card on the wall, making task management an
 - **Add, edit, and delete notes** with a title, body, and tag.
 - **Mark tasks as completed** with a checkbox.
 - **Track progress** dynamically with a progress bar showing completed vs total notes.
-- **Responsive, color-coded design with dark mode** using Bootstrap for better visual organization and accessibility.
-- **Add and edit notes via modal forms** for a smooth workflow.
+- **Responsive, color-coded design** with dark mode via Bootstrap.
 - **Real-time UI updates** without needing to refresh the page.
 - **Persistent storage** using LocalStorage so notes remain on page reload.
-- **Organize notes** efficiently with tags or categories.
 - **Drag & drop notes** to rearrange them on the wall.
 - **Search functionality** to quickly find specific notes.
-
----
+- **Organize notes** with tags and add new tags dynamically.
 
 ## 🛠️ Technologies Used
 

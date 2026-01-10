@@ -1,6 +1,7 @@
 /* ========= Variables ========= */
 const container = document.querySelector(".container .row");
 const addBtn = document.getElementById("addBtn");
+const closeFormBtn = document.getElementById("closeFormBtn");
 const noteTitle = document.getElementById("noteTitle");
 const noteBody = document.getElementById("noteBody");
 const taskCount = document.getElementById("taskCount");
@@ -9,13 +10,21 @@ const label = document.getElementById("label");
 const sortList = document.getElementById("sortList");
 const searchBar = document.getElementById("searchBar");
 const editBtn = document.getElementById("editBtn");
+const inputLabel = document.getElementById("inputLabel");
 
-let tasks = JSON.parse(window.localStorage.getItem("tasks")) || [];
+let tasks = readFromLocalStorage("tasks") || [];
+let labelsName = readFromLocalStorage("labels") || [
+  "Work",
+  "Personal",
+  "Fun",
+  "Health",
+];
+
 let currentEditId = null;
 let currentFilter = "All";
+let newLabel = "";
 
 const savedTheme = localStorage.getItem("theme") || "light";
-const labelsName = ["Fun", "Health", "Personal", "Projects", "Study", "Work"];
 const notyf = new Notyf();
 
 // ========== INIT ==========
@@ -29,19 +38,24 @@ function initApp() {
 
   renderTasks(tasks);
   calcProgress();
-  handleLabel(label);
+  handleLabel(label, true);
   handleLabel(sortList);
 }
+
 initApp();
 
 // ========== CRUD OPERATION ==========
 function createTask() {
-  if (!noteTitle.value) {
+  const modalEl = document.getElementById("addTaskModal");
+  const modal = bootstrap.Modal.getInstance(modalEl);
+  let task;
+
+  if (!noteTitle.value || noteTitle.value.trim() === "") {
     notyf.error("Title is required.");
     return;
   }
 
-  if (!noteBody.value) {
+  if (!noteBody.value || noteBody.value.trim() === "") {
     notyf.error("Note content is required.");
     return;
   }
@@ -51,19 +65,28 @@ function createTask() {
     return;
   }
 
-  const task = buildTask();
-
+  if (label.value === "+ Add New Label") {
+    if (!newLabel || newLabel.trim() === "") {
+      notyf.error("Please enter a valid label name.");
+      return;
+    }
+    if (!labelsName.includes(newLabel)) {
+      labelsName.push(newLabel);
+      saveToLocalStorage("labels", labelsName);
+      handleLabel(label, true);
+      handleLabel(sortList);
+    }
+    task = buildTask(newLabel);
+  } else {
+    task = buildTask(label.value);
+  }
   tasks.push(task);
 
-  noteTitle.value = "";
-  noteBody.value = "";
-
+  resetForm();
   updateUI();
-  notyf.success("Your note have been successfully added!");
-
-  const modalEl = document.getElementById("addTaskModal");
-  const modal = bootstrap.Modal.getInstance(modalEl);
   modal.hide();
+
+  notyf.success("Your note have been successfully added!");
 }
 
 function deleteTask(id) {
@@ -104,18 +127,28 @@ function changeStatus(id) {
 }
 
 // ========== HELPER FUNCTION ==========
-function buildTask() {
+function buildTask(labelValue) {
   return {
     id: Date.now(),
     title: noteTitle.value,
     body: noteBody.value,
     status: false,
-    label: label.value,
+    label: labelValue,
   };
+}
+
+function resetForm() {
+  noteTitle.value = "";
+  noteBody.value = "";
+  label.value = "Choose label";
+  inputLabel.innerHTML = "";
 }
 
 function saveToLocalStorage(key, value) {
   localStorage.setItem(key, JSON.stringify(value));
+}
+function readFromLocalStorage(key) {
+  return JSON.parse(window.localStorage.getItem(key));
 }
 
 function calcProgress() {
@@ -125,12 +158,15 @@ function calcProgress() {
   progress.setAttribute("style", `width: ${(completed / tasks.length) * 100}%`);
 }
 
-function handleLabel(ele) {
-  if (ele.options.length > 1) return;
-
+function handleLabel(ele, allowAdd = false) {
   labelsName.forEach((l) => {
+    if (ele.querySelector(`option[value="${l}"]`)) return;
     ele.innerHTML += `<option value="${l}">${l}</option>`;
   });
+  if (!allowAdd) return;
+  if (ele.querySelector(`option[value="+ Add New Label"]`))
+    ele.querySelector(`option[value="+ Add New Label"]`).remove();
+  ele.innerHTML += `<option value="+ Add New Label">+ Add New Label</option>`;
 }
 
 // ========== UI Functions ==========
@@ -203,6 +239,7 @@ function renderTasks(selectedTasks) {
 
   viewTasks(filteredTasks);
 }
+
 function updateUI() {
   saveToLocalStorage("tasks", tasks);
   renderTasks(tasks);
@@ -292,6 +329,29 @@ container.addEventListener("change", (e) => {
 
   const id = Number(e.target.dataset.id);
   changeStatus(id);
+});
+
+closeFormBtn.addEventListener("click", () => {
+  resetForm();
+});
+
+label.addEventListener("change", (e) => {
+  if (e.target.value === "+ Add New Label") {
+    inputLabel.innerHTML = `
+      <label for="newLabel" class="form-label">New Label</label>
+      <input type="text" class="form-control" id="newLabel" placeholder="Enter new label">
+    `;
+
+    const newLabelInput = document.getElementById("newLabel");
+    newLabelInput.focus();
+
+    newLabelInput.addEventListener("input", (e) => {
+      newLabel = e.target.value;
+    });
+  } else {
+    inputLabel.innerHTML = "";
+    newLabel = "";
+  }
 });
 
 // ========== SortableJS ==========

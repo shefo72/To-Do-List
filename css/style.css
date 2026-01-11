@@ -1,6 +1,47 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
+:root {
+  --bg-color: #f4f7f6;
+  --text-color: #2d3436;
+  --sidebar-bg: #ffffff;
+  --card-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  --input-bg: #ffffff;
+  --border-color: #e0e0e0;
+  --btn-bg: #000000;
+  --btn-text: #ffffff;
+}
+
+body.dark-mode {
+  --bg-color: #18191a;
+  --sidebar-bg: #242526;
+  --card-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  --input-bg: #242526;
+  --border-color: #3a3b3c;
+  --btn-bg: #ffffff;
+  --btn-text: #000000;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
+}
+
 .task {
+  background-color: var(--sidebar-bg);
+  color: var(--text-color);
+  box-shadow: var(--card-shadow);
   height: 350px;
   overflow: hidden;
+}
+.task:hover {
+  cursor: pointer;
+}
+
+.task:hover .options {
+  opacity: 1;
+  visibility: visible;
 }
 
 .options {
@@ -11,24 +52,14 @@
   visibility: hidden;
   transition: opacity 0.3s ease;
 }
-.task:hover .options {
-  opacity: 1;
-  visibility: visible;
-}
-
-.container img {
-  width: 60px;
-  height: 60px;
-}
 
 .dark-mode {
-  background-color: #2e2f2e;
   color: white;
 }
 
 .darkBtn {
-  top: 20px;
-  right: 30px;
+  bottom: 30px;
+  right: 20px;
   z-index: 1000;
 }
 
@@ -37,11 +68,12 @@
   height: 50px;
   transition: all 0.3s ease;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
 }
 
 .dark-toggle:hover {
-  background-color: #222;
-  transform: scale(1.1);
+  transform: rotate(15deg) scale(1.1);
 }
 
 .dark-toggle:active {
@@ -49,6 +81,31 @@
 }
 
 .badge {
+  background: rgba(0, 0, 0, 0.1);
+  color: rgba(0, 0, 0, 0.7);
   bottom: 15px;
-  background-color: #bb2735;
+  right: 15px;
+}
+
+.progress {
+  background-color: var(--border-color);
+}
+
+.progress-bar {
+  background: linear-gradient(90deg, #6c5ce7, #a29bfe);
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #bdc3c7;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #95a5a6;
 }

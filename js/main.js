@@ -24,18 +24,11 @@ let currentEditId = null;
 let currentFilter = "All";
 let newLabel = "";
 
-const savedTheme = localStorage.getItem("theme") || "light";
 const notyf = new Notyf();
 
 // ========== INIT ==========
 function initApp() {
-  if (savedTheme === "dark") {
-    document.body.classList.add("dark-mode");
-    darkBtn.innerHTML = `<i class="fa-solid fa-sun text-dark"></i>`;
-    darkBtn.classList.remove("bg-black");
-    darkBtn.classList.add("bg-white");
-  }
-
+  applySavedTheme();
   renderTasks(tasks);
   calcProgress();
   handleLabel(label, true);
@@ -169,6 +162,22 @@ function handleLabel(ele, allowAdd = false) {
   ele.innerHTML += `<option value="+ Add New Label">+ Add New Label</option>`;
 }
 
+function handleNewLabel(e) {
+  newLabel = e.target.value;
+}
+
+function applySavedTheme() {
+  const savedTheme = JSON.parse(localStorage.getItem("theme")) || "light";
+
+  if (savedTheme === "dark") {
+    document.body.classList.add("dark-mode");
+    darkBtn.innerHTML = `<i class="fa-solid fa-sun"></i>`;
+  } else {
+    document.body.classList.remove("dark-mode");
+    darkBtn.innerHTML = `<i class="fa-solid fa-moon"></i>`;
+  }
+}
+
 // ========== UI Functions ==========
 function viewTasks(tasks) {
   let TasksHTML = "";
@@ -179,6 +188,9 @@ function viewTasks(tasks) {
     "#ffdada",
     "#E07C7B",
     "#F2A365",
+    "#fde4cf",
+    "#e4c1f9",
+    "#d0f4de",
   ];
 
   tasks.forEach((task, index) => {
@@ -287,15 +299,14 @@ searchBar.addEventListener("input", (e) => {
 darkBtn.addEventListener("click", () => {
   document.body.classList.toggle("dark-mode");
 
-  if (document.body.classList.contains("dark-mode")) {
-    darkBtn.innerHTML = `<i class="fa-solid fa-sun text-dark"></i>`;
-    darkBtn.classList.remove("bg-black");
-    darkBtn.classList.add("bg-white");
+  const isDark = document.body.classList.contains("dark-mode");
+
+  // Only swap the Icon. CSS handles the colors now.
+  if (isDark) {
+    darkBtn.innerHTML = `<i class="fa-solid fa-sun"></i>`;
     saveToLocalStorage("theme", "dark");
   } else {
     darkBtn.innerHTML = `<i class="fa-solid fa-moon"></i>`;
-    darkBtn.classList.remove("bg-white");
-    darkBtn.classList.add("bg-black");
     saveToLocalStorage("theme", "light");
   }
 });
@@ -345,10 +356,13 @@ label.addEventListener("change", (e) => {
     const newLabelInput = document.getElementById("newLabel");
     newLabelInput.focus();
 
-    newLabelInput.addEventListener("input", (e) => {
-      newLabel = e.target.value;
-    });
+    newLabelInput.addEventListener("input", handleNewLabel);
   } else {
+    const oldInput = document.getElementById("newLabel");
+    if (oldInput) {
+      oldInput.removeEventListener("input", handleNewLabel);
+    }
+
     inputLabel.innerHTML = "";
     newLabel = "";
   }

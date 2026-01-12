@@ -100,6 +100,9 @@ function openTask(id) {
   document.getElementById("editTitle").value = task.title;
   document.getElementById("editBody").value = task.body;
 
+  document.getElementById("editTitle").style = checkIfArabic(task.body);
+  document.getElementById("editBody").style = checkIfArabic(task.body);
+
   handleLabel(labelEdit);
   labelEdit.value = task.label;
   currentEditId = id;
@@ -178,6 +181,14 @@ function applySavedTheme() {
   }
 }
 
+function checkIfArabic(text) {
+  const firstChar = text.trim().charAt(0);
+  if (/[\u0600-\u06FF]/.test(firstChar)) {
+    return "direction: rtl ; text-align: right;";
+  }
+  return "";
+}
+
 // ========== UI Functions ==========
 function viewTasks(tasks) {
   let TasksHTML = "";
@@ -205,8 +216,8 @@ function viewTasks(tasks) {
                     bgColors[index % bgColors.length]
                   }">
 
-                <h3>${task.title}</h3>
-                <p>${task.body}</p>
+                <h3 style="${checkIfArabic(task.title)}">${task.title}</h3>
+                <p style="${checkIfArabic(task.body)}">${task.body}</p>
                 <span class="badge position-absolute">${task.label.toUpperCase()}</span>
                 <div class="options d-flex align-items-center justify-content-center gap-1 mt-2">
                   <input type="checkbox" name="status" data-id="${task.id}" ${
